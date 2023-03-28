@@ -23,14 +23,14 @@ public class FeedsResources implements FeedsService {
 
 	@Override
 	public long postMessage(String user, String pwd, Message msg) {
-//		if(user==null || pwd == null || msg==null) {
-//			Log.info("Null information was given");
-//			throw new WebApplicationException(Status.BAD_REQUEST);
-//		}
-//		if(!feeds.containsKey(user)) {
-//			Log.info("Null information was given");
-//			throw new WebApplicationException(Status.BAD_REQUEST);
-//		}
+		if(user==null || pwd == null || msg==null) {
+			Log.info("Null information was given");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		if(!feeds.containsKey(user)) {
+			Log.info("Null information was given");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
 		return 0;
 			
 	}

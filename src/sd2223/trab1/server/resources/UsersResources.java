@@ -13,7 +13,6 @@ import sd2223.trab1.api.rest.UsersService;
 //FALTA IMPLEMENTAR searchUsers
 public class UsersResources implements UsersService {
 
-	// VER MELHOR
 	private final Map<String, User> users = new HashMap<>();
 	private static Logger Log = Logger.getLogger(UsersResources.class.getName());
 

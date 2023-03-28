@@ -52,21 +52,7 @@ public class FeedsResources implements FeedsService {
 
 	}
 
-	@Override
-<<<<<<< HEAD
-	public long postMessage(String user, String pwd, Message msg) {
-		if(user==null || pwd == null || msg==null) {
-			Log.info("Null information was given");
-			throw new WebApplicationException(Status.BAD_REQUEST);
-		}
-		if(!feeds.containsKey(user)) {
-			Log.info("Null information was given");
-			throw new WebApplicationException(Status.BAD_REQUEST);
-		}
-		return 0;
-			
-	}
-=======
+	
 	public void removeFromPersonalFeed(String username, long mid, String pwd) {
 		if (username == null || pwd == null || mid == -1) {
 			Log.info("Null information was given");
@@ -78,7 +64,6 @@ public class FeedsResources implements FeedsService {
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
 		feeds.get(username).remove(mid);
->>>>>>> 5c6ac94b52ad0e343387e657da1cbcba0afb459c
 
 	}
 

@@ -137,4 +137,5 @@ public interface FeedsService {
 	@Path("/sub/list/{" + USER + "}")
 	@Produces(MediaType.APPLICATION_JSON)
 	List<String> listSubs(@PathParam(USER) String user);
+	
 }

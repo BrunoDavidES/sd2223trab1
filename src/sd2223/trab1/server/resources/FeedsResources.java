@@ -57,7 +57,7 @@ public class FeedsResources implements FeedsService {
 
 	}
 
-	@Override
+	
 	public void removeFromPersonalFeed(String username, long mid, String pwd) {
 		if (username == null || pwd == null || mid == -1) {
 			Log.info("Null information was given");

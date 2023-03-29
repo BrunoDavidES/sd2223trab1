@@ -1,35 +1,30 @@
 package sd2223.trab1.clients.users;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.glassfish.jersey.client.ClientConfig;
-
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import sd2223.trab1.api.User;
 import sd2223.trab1.api.rest.UsersService;
 
-public class CreateUserClient {
+public class SearchUserClient {
 
 	public static void main(String[] args) throws IOException {
 
-		if (args.length != 5) {
-			System.err.println("Use: java aula2.clients.CreateUserClient url name pwd domain displayName");
+		if (args.length != 2) {
+			System.err.println("Use: java aula2.clients.SearchUserClient url query");
 			return;
 		}
 
 		String serverUrl = args[0];
-		String name = args[1];
-		String pwd = args[2];
-		String domain = args[3];
-		String displayName = args[4];
-
-		var u = new User(name, pwd, domain, displayName);
+		String query = args[1];
 
 		System.out.println("Sending request to server.");
 
@@ -38,12 +33,15 @@ public class CreateUserClient {
 
 		WebTarget target = client.target(serverUrl).path(UsersService.PATH);
 
-		Response r = target.request().accept(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(u, MediaType.APPLICATION_JSON));
+		Response r = target.path("/").queryParam(UsersService.QUERY, query).request().accept(MediaType.APPLICATION_JSON)
+				.get();
 
-		if (r.getStatus() == Status.OK.getStatusCode() && r.hasEntity())
-			System.out.println("Success, created user with id: " + r.readEntity(String.class));
-		else
+		if (r.getStatus() == Status.OK.getStatusCode() && r.hasEntity()) {
+			var users = r.readEntity(new GenericType<List<User>>() {
+			});
+			System.out.println("Success: (" + users.size() + " users)");
+			users.stream().forEach(u -> System.out.println(u));
+		} else
 			System.out.println("Error, HTTP error status: " + r.getStatus());
 
 	}

@@ -1,16 +1,20 @@
 package sd2223.trab1.server.resources;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
+import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
 import sd2223.trab1.api.User;
 import sd2223.trab1.api.rest.UsersService;
 
 //FALTA IMPLEMENTAR searchUsers
+@Singleton
 public class UsersResources implements UsersService {
 
 	private final Map<String, User> users = new HashMap<>();
@@ -70,9 +74,18 @@ public class UsersResources implements UsersService {
 			Log.info("Password is incorrect.");
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
-		existingUser.setDomain(user.getDomain());
-		existingUser.setDisplayName(user.getDisplayName());
-		existingUser.setPwd(user.getPwd());
+		if (user.getDisplayName() == null) {
+			existingUser.setDomain(user.getDomain());
+			existingUser.setPwd(user.getPwd());
+		}
+		if (user.getDomain() == null) {
+			existingUser.setDisplayName(user.getDisplayName());
+			existingUser.setPwd(user.getPwd());
+		}
+		if (user.getPwd() == null) {
+			existingUser.setDomain(user.getDomain());
+			existingUser.setDisplayName(user.getDisplayName());
+		}
 		return existingUser;
 	}
 
@@ -98,8 +111,20 @@ public class UsersResources implements UsersService {
 
 	@Override
 	public List<User> searchUsers(String pattern) {
-		// TODO Auto-generated method stub
-		return null;
+		if (pattern == null) {
+			Log.info("UserId or password null.");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		List<User> toList = new ArrayList<User>();
+		Set<String> names = users.keySet();
+		for (String uName : names) {
+			if (uName.contains(pattern)) {
+				User user = users.get(uName);
+				user.setPwd("");
+				toList.add(user);
+			}
+		}
+		return toList;
 	}
 
 }

@@ -90,6 +90,16 @@ public class UsersResources implements UsersService {
 	}
 
 	@Override
+	public boolean checkUser(String name) {
+		Log.info("checkUser : user = " + name + ";");
+		if (name == null) {
+			Log.info("UserId or password null.");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		return users.containsKey(name);
+	}
+
+	@Override
 	public User deleteUser(String name, String pwd) {
 		Log.info("deleteUser : user = " + name + "; pwd = " + pwd);
 		if (name == null || pwd == null) {

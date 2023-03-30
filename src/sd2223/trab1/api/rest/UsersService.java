@@ -21,6 +21,7 @@ public interface UsersService {
 	String NAME = "name";
 	String QUERY = "query";
 	String PATH = "/users";
+	String CHECK = "/check";
 	
 	/**
 	 * Creates a new user in the local domain.
@@ -48,6 +49,12 @@ public interface UsersService {
 	@Path("/{" + NAME+ "}")
 	@Produces(MediaType.APPLICATION_JSON)
 	User getUser(@PathParam(NAME) String name, @QueryParam( PWD ) String pwd);
+	
+	//PERGUNTAR SE DEVE TER PATH
+	@GET
+	@Path(CHECK +"/{" + NAME+ "}")
+	@Produces(MediaType.APPLICATION_JSON)
+	boolean checkUser(@PathParam(NAME) String name);
 	
 	/**
 	 * Modifies the information of a user. Values of null in any field of the user will be 

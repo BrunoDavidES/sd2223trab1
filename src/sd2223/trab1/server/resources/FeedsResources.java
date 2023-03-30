@@ -8,14 +8,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
 import sd2223.trab1.api.Message;
 import sd2223.trab1.api.User;
 import sd2223.trab1.api.rest.FeedsService;
 import sd2223.trab1.api.rest.UsersService;
+import sd2223.trab1.clients.users.CheckUserClient;
+import sd2223.trab1.server.UsersServer;
 
 //ACABAR
+//VAMOS TER DE CRIAR UM FEEDSSERVER TAMBÉM CERTO?
+@Singleton
 public class FeedsResources implements FeedsService {
 
 	// VER MELHOR
@@ -23,8 +28,8 @@ public class FeedsResources implements FeedsService {
 	private final Map<String, Map<Long, Message>> feeds = new HashMap<String, Map<Long, Message>>();
 	private final Map<String, List<String>> subscribed = new HashMap<String, List<String>>();
 	// ACABAR INICIALIZAÇÃO PRA APONTAR PRA O DOMINIO CERTO
-	private final UsersService remoteUsers = null;
-	private final FeedsService remoteFeeds = null;
+	//private final UsersServer remoteUsers = new UsersServer();
+	//private final FeedsService remoteFeeds = null;
 	private static Logger Log = Logger.getLogger(UsersResources.class.getName());
 
 	public FeedsResources() {
@@ -40,7 +45,7 @@ public class FeedsResources implements FeedsService {
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
 		try {
-			remoteUsers.getUser(username, pwd);
+			//CheckUserClient checker = new CheckUserClient();
 		} catch (WebApplicationException e) {
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
@@ -64,7 +69,8 @@ public class FeedsResources implements FeedsService {
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
 		try {
-			remoteUsers.getUser(username, pwd);
+			//FAZER CHECK
+			//remoteUsers.getUser(username, pwd);
 		} catch (WebApplicationException e) {
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
@@ -135,7 +141,8 @@ public class FeedsResources implements FeedsService {
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
 		try {
-			remoteUsers.getUser(username, pwd);
+			//
+			//emoteUsers.getUser(username, pwd);
 		} catch (WebApplicationException e) {
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
